@@ -171,7 +171,26 @@ bypassing agent curation entirely.
 
 Ship v0.1. Name the gap. That is consistent with this project's intellectual position.
 
----
+### Experimental Evidence for the Extraction Gap
+
+The June 11 2026 CrossPoll session produced a quantified measurement of this limitation.
+
+**The delta:**
+
+- Antigravity's manual curation produced **6 open_questions**
+- After cross-model examination (Claude Sonnet 4.6 receiving the handoff and returning analysis), the list grew to **11 open_questions**
+- **5 additional questions** were surfaced by the receiving model that the originating agent did not surface itself
+
+That delta -- 5 questions -- is the manual proof of what automatic uncertainty extraction
+would produce without requiring a human in the middle.
+
+In the CrossPoll session, Jeff Phillips was the extraction mechanism. He carried the
+handoff documents from Antigravity to Claude, observed Claude's responses, and returned
+the surfaced uncertainties to the open_questions list. That is a human doing manually
+what v0.2 is designed to do automatically.
+
+The 6-to-11 delta is not an estimate. It is a measured result from a documented session.
+The session transcript, handoff files, and reasoning traces are all preserved.
 
 
 ## Installation
