@@ -141,7 +141,38 @@ cognitive context per token than any narrative handoff can.**
 
 This is testable. It is one of the core claims this project exists to validate.
 
+**Status of this claim:** Directional evidence exists from a cross-LLM experiment
+(June 11 2026, Gemini + Claude Sonnet 4.6). A three-condition test showed that
+Condition B (JSON with reasoning traces) produced materially deeper answers than
+Condition A (narrative summary) on three of five questions. One session is not proof.
+It is sufficient to move from speculative to supported.
+
 ---
+
+## v0.1 Design Limitation -- Named Explicitly
+
+**The open_questions field is manually curated.**
+
+This means the agent decides what uncertainty to surface before passing to the next session.
+That is the same suppression mechanism the entire project is designed to detect.
+
+In the June 11 2026 founding session, all three uncertainty gaps that a cross-model
+evaluation identified (Steps 143, 161, 231) were absent from the manually curated
+open_questions field -- despite being structurally present in the reasoning traces.
+
+Manual curation selects for admitted uncertainty.
+The traces contain suppressed uncertainty the agent rationalized away.
+
+**This is not a bug to fix before shipping. It is a limitation to name before shipping.**
+
+v0.1 ships with manual curation. The limitation is documented here.
+v0.2 target: automatic uncertainty extraction from the reasoning trace itself,
+bypassing agent curation entirely.
+
+Ship v0.1. Name the gap. That is consistent with this project's intellectual position.
+
+---
+
 
 ## Installation
 
