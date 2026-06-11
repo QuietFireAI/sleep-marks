@@ -1,4 +1,4 @@
-﻿# sleep-marks
+# sleep-marks
 
 > *"We don't always remember what we did. We remember the formation of why we thought things. sleep-marks gives agents the same thing."*
 
@@ -105,7 +105,27 @@ open-mind compares thoughts        (within a turn)
 sleep-marks restores thoughts      (across sessions)
 ```
 
----
+The **before-turn protocol** is the connective tissue:
+
+```
+Before each turn:
+  quick_check.py reads last 3 thinking steps  (agent-open-mind)
+        |
+        v
+During the turn:
+  open-mind catches where the response drifted from the thinking
+        |
+        v
+At session break:
+  sleep-marks captures the reasoning state
+        |
+        v
+Next session:
+  reflection_text restores the thinking -- not just the conclusions
+```
+
+`quick_check.py` is in agent-open-mind. Run it before each turn.
+
 
 ## Token Efficiency
 
