@@ -1,13 +1,13 @@
-"""
+﻿"""
 Tests for sleep_marks.marker
 
 Core claims being tested:
-1. SleepMark captures reasoning traces and produces injection text
-2. Injection text contains the context summary and open questions
-3. RestoredContext loads a saved mark and reconstructs injection text
+1. SleepMark captures reasoning traces and produces Reflection text
+2. Reflection text contains the context summary and open questions
+3. RestoredContext loads a saved mark and reconstructs Reflection text
 4. Token efficiency claim: reasoning traces encode state densely
 5. No reasoning traces = graceful handling, not crash
-6. Injection text respects max_injection_chars limit
+6. Reflection text respects max_reflection_chars limit
 7. Open questions survive round-trip save/restore
 """
 
@@ -96,15 +96,15 @@ class TestSleepMarkCapture:
         )
         assert result.open_questions == SAMPLE_OPEN_QUESTIONS
 
-    def test_injection_text_present(self, tmp_path):
+    def test_reflection_text_present(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
         result = marker.capture("id-001", SAMPLE_SUMMARY)
-        assert len(result.injection_text) > 0
+        assert len(result.reflection_text) > 0
 
     def test_injection_contains_summary(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
         result = marker.capture("id-001", SAMPLE_SUMMARY)
-        assert SAMPLE_SUMMARY in result.injection_text
+        assert SAMPLE_SUMMARY in result.reflection_text
 
     def test_injection_contains_open_questions(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
@@ -114,19 +114,19 @@ class TestSleepMarkCapture:
             open_questions=SAMPLE_OPEN_QUESTIONS,
         )
         for q in SAMPLE_OPEN_QUESTIONS:
-            assert q in result.injection_text
+            assert q in result.reflection_text
 
     def test_injection_contains_reasoning(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
         result = marker.capture("id-001", SAMPLE_SUMMARY)
-        # At least part of the thinking trace should be in the injection
-        assert "approach X" in result.injection_text or "constraint Z" in result.injection_text
+        # At least part of the thinking trace should be in the reflection
+        assert "approach X" in result.reflection_text or "constraint Z" in result.reflection_text
 
     def test_injection_respects_max_chars(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
-        result = marker.capture("id-001", SAMPLE_SUMMARY, max_injection_chars=100)
+        result = marker.capture("id-001", SAMPLE_SUMMARY, max_reflection_chars=100)
         # The reasoning portion should be truncated
-        assert len(result.injection_text) < 2000  # well under unconstrained size
+        assert len(result.reflection_text) < 2000  # well under unconstrained size
 
 
 # ── No-traces graceful handling ────────────────────────────────────────────────
@@ -141,7 +141,7 @@ class TestNoTraces:
     def test_empty_traces_injection_still_valid(self, tmp_path):
         marker = make_marker_with_traces([], tmp_path)
         result = marker.capture("id-empty", SAMPLE_SUMMARY)
-        assert SAMPLE_SUMMARY in result.injection_text
+        assert SAMPLE_SUMMARY in result.reflection_text
 
     def test_empty_traces_no_questions(self, tmp_path):
         marker = make_marker_with_traces([], tmp_path)
@@ -165,7 +165,7 @@ class TestSaveRestore:
         out = mark.save(str(tmp_path / "test_mark.json"))
         data = json.loads(out.read_text(encoding="utf-8"))
         assert "conversation_id" in data
-        assert "injection_text" in data
+        assert "reflection_text" in data
         assert "open_questions" in data
 
     def test_restore_returns_restored_context(self, tmp_path):
@@ -182,13 +182,13 @@ class TestSaveRestore:
         restored = SleepMarker.restore(str(out))
         assert restored.open_questions == SAMPLE_OPEN_QUESTIONS
 
-    def test_injection_text_survives_roundtrip(self, tmp_path):
+    def test_reflection_text_survives_roundtrip(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
         mark = marker.capture("id-001", SAMPLE_SUMMARY)
-        original_injection = mark.injection_text
+        original_injection = mark.reflection_text
         out = mark.save(str(tmp_path / "test_mark.json"))
         restored = SleepMarker.restore(str(out))
-        assert restored.injection_text == original_injection
+        assert restored.reflection_text == original_injection
 
     def test_reasoning_state_in_restored(self, tmp_path):
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
@@ -205,23 +205,23 @@ class TestTokenEfficiency:
     Encodes the core claim: reasoning traces are more token-efficient
     than narrative handoffs for restoring cognitive context.
 
-    The test validates that the injection text is significantly shorter
+    The test validates that the Reflection text is significantly shorter
     than a full re-narration of the same context would be, while still
     containing the key reasoning content.
     """
 
     def test_injection_is_dense_relative_to_traces(self, tmp_path):
         """
-        Injection text should be shorter than the sum of raw trace content,
+        Reflection text should be shorter than the sum of raw trace content,
         while preserving the key reasoning markers.
         """
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
-        mark = marker.capture("id-001", SAMPLE_SUMMARY, max_injection_chars=1500)
+        mark = marker.capture("id-001", SAMPLE_SUMMARY, max_reflection_chars=1500)
 
         raw_trace_chars = sum(len(t["thinking"]) for t in SAMPLE_TRACES)
-        injection_chars = len(mark.injection_text)
+        injection_chars = len(mark.reflection_text)
 
-        # Injection is bounded and structured, not a raw dump
+        # Reflection is bounded and structured, not a raw dump
         assert injection_chars < raw_trace_chars * 3  # not inflated
         # But it contains meaningful content
         assert injection_chars > 100
@@ -229,10 +229,10 @@ class TestTokenEfficiency:
     def test_key_uncertainty_preserved_in_injection(self, tmp_path):
         """
         The uncertainty that was present in the thinking should survive
-        into the injection text. This is the whole point.
+        into the Reflection text. This is the whole point.
         """
         marker = make_marker_with_traces(SAMPLE_TRACES, tmp_path)
         mark = marker.capture("id-001", SAMPLE_SUMMARY)
 
-        # The uncertainty from step 3 should be in the injection
-        assert "not certain" in mark.injection_text or "still evaluating" in mark.injection_text or "constraint Z" in mark.injection_text
+        # The uncertainty from step 3 should be in the reflection
+        assert "not certain" in mark.reflection_text or "still evaluating" in mark.reflection_text or "constraint Z" in mark.reflection_text

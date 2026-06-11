@@ -2,7 +2,7 @@
 sleep-marks - SleepMarker
 
 Captures the reasoning state of an agent at a session break point.
-Produces injection text that restores cognitive context in the next session.
+Produces reflection text that restores cognitive context in the next session.
 
 The gap between sessions is where reasoning continuity dies.
 sleep-marks closes that gap.
@@ -30,14 +30,14 @@ class SleepMark:
         context_summary:  What was being worked on
         reasoning_traces: The thinking steps captured at the break point
         open_questions:   Unresolved questions at time of break
-        injection_text:   Ready to prepend to the next session's context
+        reflection_text:  Ready to prepend to the next session's context
         timestamp:        When the mark was created
     """
     conversation_id: str
     context_summary: str
     reasoning_traces: list[dict]
     open_questions:   list[str]
-    injection_text:   str
+    reflection_text:  str
     timestamp:        str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
@@ -54,7 +54,7 @@ class SleepMark:
                 "context_summary":  self.context_summary,
                 "open_questions":   self.open_questions,
                 "reasoning_traces": self.reasoning_traces,
-                "injection_text":   self.injection_text,
+                "reflection_text":  self.reflection_text,
             }, indent=2, ensure_ascii=False),
             encoding="utf-8",
         )
@@ -64,15 +64,15 @@ class SleepMark:
 @dataclass
 class RestoredContext:
     """
-    The result of loading a sleep mark for injection into a new session.
+    The result of loading a sleep mark for use in a new session.
 
     Attributes:
-        injection_text:   Formatted text to prepend to the new session context
+        reflection_text:  Formatted text to prepend to the new session context
         open_questions:   Unresolved questions from the previous session
         reasoning_state:  A human-readable summary of how the agent was thinking
         source_mark:      The original SleepMark data
     """
-    injection_text:  str
+    reflection_text: str
     open_questions:  list[str]
     reasoning_state: str
     source_mark:     dict
@@ -92,28 +92,28 @@ class SleepMarker:
         context_summary: str,
         open_questions: list[str] | None = None,
         last_n_thoughts: int = 5,
-        max_injection_chars: int = 1500,
+        max_reflection_chars: int = 1500,
     ) -> SleepMark:
         """
         Capture the current reasoning state from a conversation transcript.
 
         Args:
-            conversation_id:    The conversation to read thinking traces from
-            context_summary:    Brief description of what was being worked on
-            open_questions:     Explicitly unresolved questions (optional)
-            last_n_thoughts:    How many recent thinking steps to capture
-            max_injection_chars: Max length of the injection text
+            conversation_id:      The conversation to read thinking traces from
+            context_summary:      Brief description of what was being worked on
+            open_questions:       Explicitly unresolved questions (optional)
+            last_n_thoughts:      How many recent thinking steps to capture
+            max_reflection_chars: Max length of the reflection text
 
         Returns:
             SleepMark ready to save and later restore from
         """
         traces = self._extract_traces(conversation_id, last_n_thoughts)
         questions = open_questions or []
-        injection = self._format_injection(
+        reflection = self._format_reflection(
             context_summary=context_summary,
             traces=traces,
             open_questions=questions,
-            max_chars=max_injection_chars,
+            max_chars=max_reflection_chars,
         )
 
         return SleepMark(
@@ -121,7 +121,7 @@ class SleepMarker:
             context_summary=context_summary,
             reasoning_traces=traces,
             open_questions=questions,
-            injection_text=injection,
+            reflection_text=reflection,
         )
 
     @classmethod
@@ -133,7 +133,7 @@ class SleepMarker:
             mark_path: Path to the saved sleep mark JSON file
 
         Returns:
-            RestoredContext with injection text and open questions
+            RestoredContext with reflection text and open questions
         """
         data = json.loads(Path(mark_path).read_text(encoding="utf-8"))
         traces = data.get("reasoning_traces", [])
@@ -148,7 +148,7 @@ class SleepMarker:
             reasoning_state = "No reasoning traces captured in this mark."
 
         return RestoredContext(
-            injection_text=data.get("injection_text", ""),
+            reflection_text=data.get("reflection_text", ""),
             open_questions=data.get("open_questions", []),
             reasoning_state=reasoning_state,
             source_mark=data,
@@ -192,14 +192,14 @@ class SleepMarker:
         return traces[-last_n:] if traces else []
 
     @classmethod
-    def _format_injection(
+    def _format_reflection(
         cls,
         context_summary: str,
         traces: list[dict],
         open_questions: list[str],
         max_chars: int,
     ) -> str:
-        """Format the sleep mark for injection into the next session's context."""
+        """Format the sleep mark as reflection text for the next session."""
         lines = [
             "## Restored Reasoning Context (sleep-marks)",
             "",

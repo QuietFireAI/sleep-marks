@@ -1,4 +1,4 @@
-"""
+﻿"""
 sleep-marks - basic demonstration
 
 Shows the core workflow in minimal code.
@@ -40,8 +40,8 @@ print("Sleep mark created.")
 print(f"Reasoning traces captured: {len(mark.reasoning_traces)}")
 print(f"Open questions: {len(mark.open_questions)}")
 print()
-print("--- Injection text (prepend to next session) ---")
-print(mark.injection_text)
+print("--- Reflection text (prepend to next session) ---")
+print(mark.reflection_text)
 
 # Session B begins. Load the mark and restore context.
 restored = SleepMarker.restore("marks/demo_mark.json")

@@ -1,4 +1,4 @@
-# sleep-marks
+﻿# sleep-marks
 
 > *"We don't always remember what we did. We remember the formation of why we thought things. sleep-marks gives agents the same thing."*
 
@@ -8,7 +8,7 @@
 
 `sleep-marks` restores cognitive continuity after a session break.
 
-Standard handoffs inject what was decided. sleep-marks injects how the agent was reasoning when it decided - the uncertainty that was present, the options that were considered, the reasoning that was in motion.
+Standard handoffs carry what was decided. sleep-marks restores how the agent was reasoning when it decided - the uncertainty that was present, the options that were considered, the reasoning that was in motion.
 
 The agent coming back from a break knows not just the conclusion. It knows the thinking behind it.
 
@@ -51,10 +51,10 @@ Human memory does not store every fact. But it tends to retain the formation of 
 sleep-marks applies this to agents:
 
 ```
-Standard context injection:
+Standard context handoff:
   "The team decided to use approach X."
 
-sleep-marks injection:
+sleep-marks reflection:
   "The team was deciding between X and Y.
    X was chosen because of constraint Z, but the agent noted
    uncertainty about Z's validity in edge cases.
@@ -77,14 +77,14 @@ Session A (before break):
          |
          v
 Session B (after break):
-  sleep-marks injects the previous reasoning trace
+  sleep-marks provides the previous reasoning trace
   into the new context before the agent begins
          |
          v
   Agent begins with cognitive continuity, not just factual continuity
 ```
 
-The injected content is not a summary of decisions.
+The provided content is not a summary of decisions.
 It is a reconstruction of the reasoning state at the break point.
 
 ---
@@ -116,7 +116,7 @@ sleep-marks is different. Reasoning traces are dense.
 A single thinking step of 200 tokens can encode the cognitive state
 that would take 2000 tokens of narrative to reconstruct.
 
-The claim: **injecting compressed reasoning traces restores more
+The claim: **providing compressed reasoning traces restores more
 cognitive context per token than any narrative handoff can.**
 
 This is testable. It is one of the core claims this project exists to validate.
@@ -158,7 +158,7 @@ mark.save("marks/session_001.json")
 from sleep_marks import SleepMarker
 
 restoration = SleepMarker.restore("marks/session_001.json")
-print(restoration.injection_text)   # Prepend this to the next session's context
+print(restoration.reflection_text)   # Prepend this to the next session's context
 print(restoration.open_questions)   # What was unresolved
 print(restoration.reasoning_state)  # How the agent was thinking
 ```
