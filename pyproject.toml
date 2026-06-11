@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "sleep-marks"
+version = "0.1.0"
+description = "Thought-based context restoration for AI agents after session breaks. Injects reasoning state, not just decisions."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Jeff Phillips", email = "jeff@dispatcheragents.com" }
+]
+keywords = ["ai", "llm", "thinking-tokens", "context-restoration", "agent", "stateless"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/QuietFireAI/sleep-marks"
+Repository = "https://github.com/QuietFireAI/sleep-marks"
+"Bug Tracker" = "https://github.com/QuietFireAI/sleep-marks/issues"
+"DispatcherAgents" = "https://dispatcheragents.com"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sleep_marks*"]
