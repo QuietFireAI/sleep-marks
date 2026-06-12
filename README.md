@@ -6,15 +6,16 @@
 
 ## The DispatcherAgents Stack
 
-*Each tool works alone. All five make generation governed. Read the [MANIFESTO.md](./MANIFESTO.md) for the full architecture.*
+*Six pillars. Each works alone; together they give an agent end-to-end self-consistency — less drift, fewer tokens, an honest record on every turn. Read the [MANIFESTO.md](./MANIFESTO.md) for the full architecture.*
 
 | Tool | Role |
 |---|---|
-| [before-turn](https://github.com/QuietFireAI/before-turn) | Governs entry -- reads prior thinking before every response |
-| [pre-response-selfcheck](https://github.com/QuietFireAI/pre-response-selfcheck) | Governs exit -- reads output as cold reader before delivering |
+| [before-turn](https://github.com/QuietFireAI/before-turn) | Governs entry — reads prior thinking before every response |
+| [pre-response-selfcheck](https://github.com/QuietFireAI/pre-response-selfcheck) | Governs exit — reads output as cold reader before delivering |
 | [agent-open-mind](https://github.com/QuietFireAI/agent-open-mind) | Reads what sub-agents thought, not what they said |
 | [open-mind](https://github.com/QuietFireAI/open-mind) | Compares what the agent thought to what it said |
 | [sleep-marks](https://github.com/QuietFireAI/sleep-marks) | Restores reasoning state across session breaks |
+| [splitvantage](https://github.com/QuietFireAI/splitvantage) | Sends one task to two models, surfaces what each one's reasoning suppressed |
 
 ---
 
@@ -23,7 +24,7 @@
 
 `sleep-marks` restores cognitive continuity after a session break.
 
-Standard handoffs carry what was decided. sleep-marks restores how the agent was reasoning when it decided - the uncertainty that was present, the options that were considered, the reasoning that was in motion.
+Standard handoffs carry what was decided. sleep-marks restores how the agent was reasoning when it decided — the uncertainty that was present, the options that were considered, the reasoning that was in motion.
 
 The agent coming back from a break knows not just the conclusion. It knows the thinking behind it.
 
@@ -33,7 +34,7 @@ The agent coming back from a break knows not just the conclusion. It knows the t
 
 Agents are stateless. After any break, they lose context.
 
-The current fix - conversation handoffs - works at the factual layer:
+The current fix — conversation handoffs — works at the factual layer:
 
 ```
 "Here is what was decided:
@@ -61,7 +62,7 @@ sleep-marks tells you how you were thinking when you got there.
 
 ## Human Memory Analogy
 
-Human memory does not store every fact. But it tends to retain the formation of important decisions - the moment of weighing, the feeling of uncertainty, the why underneath the what.
+Human memory does not store every fact. But it tends to retain the formation of important decisions — the moment of weighing, the feeling of uncertainty, the why underneath the what.
 
 sleep-marks applies this to agents:
 
@@ -164,7 +165,7 @@ It is sufficient to move from speculative to supported.
 
 ---
 
-## v0.1 Design Limitation -- Named Explicitly
+## v0.1 Design Limitation — Named Explicitly
 
 **The open_questions field is manually curated.**
 
@@ -173,7 +174,7 @@ That is the same suppression mechanism the entire project is designed to detect.
 
 In the June 11 2026 founding session, all three uncertainty gaps that a cross-model
 evaluation identified (Steps 143, 161, 231) were absent from the manually curated
-open_questions field -- despite being structurally present in the reasoning traces.
+open_questions field — despite being structurally present in the reasoning traces.
 
 Manual curation selects for admitted uncertainty.
 The traces contain suppressed uncertainty the agent rationalized away.
@@ -196,7 +197,7 @@ The June 11 2026 CrossPol session produced a quantified measurement of this limi
 - After cross-model examination (Claude Sonnet 4.6 receiving the handoff and returning analysis), the list grew to **11 open_questions**
 - **5 additional questions** were surfaced by the receiving model that the originating agent did not surface itself
 
-That delta -- 5 questions -- is the manual proof of what automatic uncertainty extraction
+That delta — 5 questions — is the manual proof of what automatic uncertainty extraction
 would produce without requiring a human in the middle.
 
 In the CrossPol session, Jeff Phillips was the extraction mechanism. He carried the
@@ -210,11 +211,7 @@ The session transcript, handoff files, and reasoning traces are all preserved.
 
 ## Installation
 
-```bash
-pip install sleep-marks
-```
-
-Or from source:
+Install from source (a PyPI release is planned):
 
 ```bash
 git clone https://github.com/QuietFireAI/sleep-marks.git
@@ -252,19 +249,20 @@ print(restoration.reasoning_state)  # How the agent was thinking
 
 ## Status
 
-**v0.1 - June 2026**
+**v0.1 — June 2026**
 
 Core concept validated. Implementation in progress.
 
-Part of the [DispatcherAgents](https://dispatcheragents.com) project.
+---
+
+Part of the [DispatcherAgents](https://dispatcheragents.com) project by [QuietFireAI](https://github.com/QuietFireAI).
 
 ---
 
 ## License
 
-MIT - QuietFireAI / [dispatcheragents.com](https://dispatcheragents.com)
+MIT — QuietFireAI / [dispatcheragents.com](https://dispatcheragents.com)
 
 ---
 
 *"The agents start fresh every time. sleep-marks means they don't have to."*
-
