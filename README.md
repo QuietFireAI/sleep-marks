@@ -188,7 +188,7 @@ Ship v0.1. Name the gap. That is consistent with this project's intellectual pos
 
 ### Experimental Evidence for the Extraction Gap
 
-The June 11 2026 CrossPoll session produced a quantified measurement of this limitation.
+The June 11 2026 CrossPol session produced a quantified measurement of this limitation.
 
 **The delta:**
 
@@ -199,7 +199,7 @@ The June 11 2026 CrossPoll session produced a quantified measurement of this lim
 That delta -- 5 questions -- is the manual proof of what automatic uncertainty extraction
 would produce without requiring a human in the middle.
 
-In the CrossPoll session, Jeff Phillips was the extraction mechanism. He carried the
+In the CrossPol session, Jeff Phillips was the extraction mechanism. He carried the
 handoff documents from Antigravity to Claude, observed Claude's responses, and returned
 the surfaced uncertainties to the open_questions list. That is a human doing manually
 what v0.2 is designed to do automatically.
@@ -267,3 +267,4 @@ Apache 2.0 - QuietFireAI / [dispatcheragents.com](https://dispatcheragents.com)
 ---
 
 *"The agents start fresh every time. sleep-marks means they don't have to."*
+
