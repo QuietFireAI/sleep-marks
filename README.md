@@ -262,7 +262,7 @@ Part of the [DispatcherAgents](https://dispatcheragents.com) project.
 
 ## License
 
-Apache 2.0 - QuietFireAI / [dispatcheragents.com](https://dispatcheragents.com)
+MIT - QuietFireAI / [dispatcheragents.com](https://dispatcheragents.com)
 
 ---
 
