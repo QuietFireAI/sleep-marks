@@ -7,7 +7,7 @@ name = "sleep-marks"
 version = "0.1.0"
 description = "Thought-based context restoration for AI agents after session breaks. Injects reasoning state, not just decisions."
 readme = "README.md"
-license = { text = "Apache-2.0" }
+license = { text = "MIT" }
 authors = [
     { name = "Jeff Phillips", email = "jeff@dispatcheragents.com" }
 ]
@@ -16,7 +16,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: Apache Software License",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
