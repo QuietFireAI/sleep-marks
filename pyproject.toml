@@ -9,7 +9,7 @@ description = "Thought-based context restoration for AI agents after session bre
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-    { name = "Jeff Phillips", email = "jeff@dispatcheragents.com" }
+    { name = "Jeff Phillips", email = "jeff@github.com/QuietFireAI" }
 ]
 keywords = ["ai", "llm", "thinking-tokens", "context-restoration", "agent", "stateless"]
 classifiers = [
@@ -31,7 +31,7 @@ dependencies = []
 Homepage = "https://github.com/QuietFireAI/sleep-marks"
 Repository = "https://github.com/QuietFireAI/sleep-marks"
 "Bug Tracker" = "https://github.com/QuietFireAI/sleep-marks/issues"
-"DispatcherAgents" = "https://dispatcheragents.com"
+"DispatcherAgents" = "https://github.com/QuietFireAI"
 
 [tool.setuptools.packages.find]
 where = ["."]
