@@ -266,3 +266,7 @@ MIT - QuietFireAI / [QuietFireAI](https://github.com/QuietFireAI)
 ---
 
 *"The agents start fresh every time. sleep-marks means they don't have to."*
+
+## Runtime wiring
+
+Runtime wiring (dispatcher-agents): every signed territory transfer carries a SleepMark of the sending hub's reasoning state (recent reflections + open queue items); the receiving hub restores it - sleepmark.captured / sleepmark.restored on both audit logs.
