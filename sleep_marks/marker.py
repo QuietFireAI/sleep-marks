@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-APP_DATA_DIR = Path(r"C:\Users\<REDACTED>\.gemini\antigravity")
+APP_DATA_DIR = Path.home() / ".gemini" / "antigravity"
 BRAIN_DIR = APP_DATA_DIR / "brain"
 
 

@@ -109,9 +109,12 @@ It is a reconstruction of the reasoning state at the break point.
 
 | Tool | Direction | When |
 |---|---|---|
+| [before-turn](https://github.com/QuietFireAI/before-turn) | Entry | Agent reads prior thinking before every response |
 | [agent-open-mind](https://github.com/QuietFireAI/agent-open-mind) | External | Dispatcher reads what agents thought |
 | [open-mind](https://github.com/QuietFireAI/open-mind) | Internal | Agent compares its thinking to its response |
+| [pre-response-selfcheck](https://github.com/QuietFireAI/pre-response-selfcheck) | Exit | Agent rereads its output as a cold reader before delivery |
 | **sleep-marks** | Temporal | Agent restores reasoning context after a break |
+| [splitvantage](https://github.com/QuietFireAI/splitvantage) | Cross-model | Second model cross-examines drift-flagged decisions |
 
 They are sequential tools in the same pipeline:
 

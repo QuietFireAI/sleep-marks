@@ -5,6 +5,10 @@ Shows the core workflow in minimal code.
 A session ends. The next session picks up where the reasoning left off.
 """
 
+import sys
+from pathlib import Path as _P
+sys.path.insert(0, str(_P(__file__).resolve().parent.parent))
+
 from sleep_marks import SleepMarker
 
 # Simulate: session A ended. These are the traces from that session.
