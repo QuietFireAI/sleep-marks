@@ -156,6 +156,9 @@ class SleepMarker:
 
     def _extract_traces(self, conversation_id: str, last_n: int) -> list[dict]:
         """Extract the last N thinking traces from a transcript."""
+        # Reject path traversal: the id is a single directory name, never a path.
+        if any(sep in conversation_id for sep in ("/", "\\")) or conversation_id in (".", ".."):
+            return []
         transcript = (
             self._brain
             / conversation_id
